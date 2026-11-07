@@ -1,0 +1,20 @@
+# Configuration et copies de travail personnelles
+configuration.locale.json
+installation_locale*/
+.preparation_acc_*/
+**/WifiLocal.h.local
+# Releves, extractions et sorties d’analyse
+**/retour_*/
+**/retour_*.zip
+**/releve*.json
+**/diagnostic*.json
+**/ecu_etendu*.tar*
+**/fin_codex.txt
+# Fichiers generes
+**/__pycache__/
+*.pyc
+*.elf
+*.bin
+*.log
+.DS_Store
+Thumbs.db

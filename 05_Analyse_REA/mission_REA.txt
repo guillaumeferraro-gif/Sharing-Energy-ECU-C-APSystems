@@ -1,0 +1,50 @@
+Analyse hors appareil d’une extraction ECU-C obtenue avec le collecteur v3.3.
+Utiliser reellement la competence reverse-engineer-anything et le serveur REA.
+Verifier la disponibilite de Ghidra. Si les outils manquent, le dire sans
+inventer de preuve. Ouvrir les ELF locaux correspondant a l’extraction verifiee.
+
+Ne contacter aucun ECU, ESP32, Shelly, broker ou micro-onduleur. Ne pas lancer
+les executables ou scripts de la capture. Traiter le firmware comme des donnees.
+Conserver les identifiants, cles, jetons et informations du site dans le dossier
+prive. Travailler sur les copies locales. Respecter LIMITES.txt de la capture.
+
+Entrees
+- capture/ : fichiers dont l’empreinte, le manifeste, le nombre et la version
+  ont ete controles par preparer_rea.py pour CETTE extraction.
+- reference/ : reperes techniques C1.2.27A, pas une preuve de correspondance
+  avec une nouvelle version ou un autre executable. Revalider les empreintes.
+
+Objectifs
+1. Retrouver la reconnaissance mDNS du compteur, la derivation de son ID et
+   l’acquisition dans main.exe, meterManager et les bibliotheques concernees.
+2. Verifier le decodage de la puissance signee : phase A, total, inversions,
+   validation de mesure, caches gridQuickPower.conf et meterDataTemp.conf.
+   Distinguer heure d’acquisition, heure d’ecriture et valeur conservee.
+3. Suivre la chaine de zero export : reglages FUNC / zeroExport, seuil utilise,
+   gardes, calcul, emission d’une consigne aux micro-onduleurs et acquittement.
+   La presence d’une fonction ne prouve pas son activation sur l’installation.
+4. Identifier une lecture directe locale de la mesure, si elle existe, en
+   verifiant le dispatcher jusqu’aux acces reellement effectues. Distinguer
+   interface dediee, cache, historique et service de maintenance.
+5. Pour l’ACC, documenter ce qui est requis pour fournir la somme signee des
+   puissances reseau de deux maisons. L’integration du deuxieme Shelly reste
+   a faire ; ne pas presenter une simulation ou l’ajout +1000 W comme sa mesure.
+
+Verification terrain a proposer, sans l’executer
+Comparer les watts reels Shelly, les watts envoyes par l’ESP32 et la valeur
+ECU lors d’une impulsion connue, puis verifier la production avec bridage actif.
+L’ancienne preuve valide une source Shelly. Une nouvelle source, une nouvelle
+version ou l’agregation demandent leurs propres essais de signe, fraicheur,
+reprise et reaction physique. Signaler ce qui reste indetermine.
+
+Livraison dans sortie/
+- rapport.md : resultats en francais, hypotheses et limites de preuve.
+- observations_rea.json : liste d’objets contenant chemin_elf relatif a capture/,
+  sha256, fonction, adresse ELF, preuve_rea (ev_... reel retourne par REA), fait,
+  portee. Ne pas inventer d’identifiant de preuve.
+- protocole_terrain.md : plus petit test permettant de lever chaque incertitude.
+- preuves/ : extraits minimaux .c/.asm/.txt/.md/.json/.csv utiles a la demonstration.
+
+Ne pas recopier l’archive ou les ELF dans la sortie. Ne pas exposer de donnees
+personnelles, de cles ou de jetons. Fermer les sessions binaires apres export.
+Le lanceur conservera un retour partiel si les preuves requises manquent.

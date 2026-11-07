@@ -1,0 +1,93 @@
+### get_quickPowerValue
+00018f28  push {r7, lr}
+00018f2a  sub sp, #16
+00018f2c  add r7, sp, #0
+00018f2e  str r0, [r7, #4]
+00018f30  str r1, [r7]
+00018f32  ldr r0, [r7, #4]
+00018f34  movw r1, #34284
+00018f38  movt r1, #2                      @ 0x285ec 'scope'
+00018f3c  bl #9284                         => 0x1b384 cJSON_HasObjectItem
+00018f40  mov r3, r0
+00018f42  cmp r3, #0
+00018f44  bne #2                           => 0x18f4a
+00018f46  movs r3, #203
+00018f48  b #144                           => 0x18fdc
+00018f4a  bl #12298                        => 0x1bf58 cJSON_CreateObject
+00018f4e  str r0, [r7, #12]
+00018f50  movw r0, #34676
+00018f54  movt r0, #2                      @ 0x28774 '/tmp/pvQuickPower.conf'
+00018f58  movs r1, #0
+00018f5a  blx #-58812                      => 0xa9a0 YN_get_ints_from_file
+00018f5e  mov r3, r0
+00018f60  mov r0, r3
+00018f62  blx #-58940                      => 0xa928 YN_int_to_str
+00018f66  mov r3, r0
+00018f68  ldr r0, [r7, #12]
+00018f6a  movw r1, #34700
+00018f6e  movt r1, #2                      @ 0x2878c 'pvPower'
+00018f72  mov r2, r3
+00018f74  bl #10320                        => 0x1b7c8 cJSON_AddStringToObject
+00018f78  movw r0, #34708
+00018f7c  movt r0, #2                      @ 0x28794 '/tmp/gridQuickPower.conf'
+00018f80  movs r1, #0
+00018f82  blx #-58912                      => 0xa964 access
+00018f86  mov r3, r0
+00018f88  cmp r3, #0
+00018f8a  bne #38                          => 0x18fb4
+00018f8c  movw r0, #34708
+00018f90  movt r0, #2                      @ 0x28794 '/tmp/gridQuickPower.conf'
+00018f94  movs r1, #0
+00018f96  blx #-58872                      => 0xa9a0 YN_get_ints_from_file
+00018f9a  mov r3, r0
+00018f9c  mov r0, r3
+00018f9e  blx #-59000                      => 0xa928 YN_int_to_str
+00018fa2  mov r3, r0
+00018fa4  ldr r0, [r7, #12]
+00018fa6  movw r1, #34736
+00018faa  movt r1, #2                      @ 0x287b0 'gridPower'
+00018fae  mov r2, r3
+00018fb0  bl #10260                        => 0x1b7c8 cJSON_AddStringToObject
+00018fb4  ldr r0, [r7]
+00018fb6  movw r1, #34284
+00018fba  movt r1, #2                      @ 0x285ec 'scope'
+00018fbe  movw r2, #34364
+00018fc2  movt r2, #2                      @ 0x2863c '9'
+00018fc6  bl #10238                        => 0x1b7c8 cJSON_AddStringToObject
+00018fca  ldr r0, [r7]
+00018fcc  movw r1, #34292
+00018fd0  movt r1, #2                      @ 0x285f4 'values'
+00018fd4  ldr r2, [r7, #12]
+00018fd6  bl #9638                         => 0x1b580 cJSON_AddItemToObject
+00018fda  movs r3, #200
+00018fdc  mov r0, r3
+00018fde  add.w r7, r7, #16
+00018fe2  mov sp, r7
+00018fe4  pop {r7, pc}
+
+### control_client_function
+0001f010  ldr r3, [r3, #16]
+0001f012  movw r0, #37276
+0001f016  movt r0, #2                      @ 0x2919c 'quickPowerValue'
+0001f01a  mov r1, r3
+0001f01c  movs r2, #15
+0001f01e  blx #-84064                      => 0xa7c0 strncmp
+0001f022  mov r3, r0
+0001f024  cmp r3, #0
+0001f026  bne #46                          => 0x1f058
+0001f028  ldr r0, [r7, #44]
+0001f02a  movw r1, #36704
+0001f02e  movt r1, #2                      @ 0x28f60
+0001f032  bl #-6294                        => 0x1d7a0 noPermission
+0001f036  mov r3, r0
+0001f038  cmp r3, #0
+0001f03a  beq #6                           => 0x1f044
+0001f03c  movw r3, #2001
+0001f040  str r3, [r7, #28]
+0001f042  b #18                            => 0x1f058
+0001f044  ldr r0, [r7]
+0001f046  ldr r1, [r7, #40]
+0001f048  bl #-24868                       => 0x18f28 get_quickPowerValue
+0001f04c  mov r3, r0
+0001f04e  str r3, [r7, #28]
+0001f050  b #4                             => 0x1f058

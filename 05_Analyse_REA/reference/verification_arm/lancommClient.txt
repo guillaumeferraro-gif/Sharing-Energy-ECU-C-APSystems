@@ -1,0 +1,88 @@
+### AddMeterData
+00010d6c  push {r7, lr}
+00010d6e  sub sp, #152
+00010d70  add r7, sp, #0
+00010d72  str r0, [r7, #4]
+00010d74  add.w r2, r7, #8
+00010d78  movs r3, #128
+00010d7a  mov r0, r2
+00010d7c  movs r1, #0
+00010d7e  mov r2, r3
+00010d80  blx #-31632                      => 0x91f4 memset
+00010d84  movw r0, #15772
+00010d88  movt r0, #1                      @ 0x13d9c '/tmp/meterDataTemp.conf'
+00010d8c  movw r1, #15796
+00010d90  movt r1, #1                      @ 0x13db4 'r'
+00010d94  blx #-31604                      => 0x9224 fopen
+00010d98  str.w r0, [r7, #144]
+00010d9c  ldr.w r3, [r7, #144]
+00010da0  cmp r3, #0
+00010da2  beq #22                          => 0x10dbc
+00010da4  add.w r3, r7, #8
+00010da8  mov r0, r3
+00010daa  movs r1, #128
+00010dac  ldr.w r2, [r7, #144]
+00010db0  blx #-31296                      => 0x9374 fgets
+00010db4  ldr.w r0, [r7, #144]
+00010db8  blx #-31196                      => 0x93e0 fclose
+00010dbc  add.w r3, r7, #8
+00010dc0  movw r0, #15800
+00010dc4  movt r0, #1                      @ 0x13db8 'meterData'
+00010dc8  mov r1, r3
+00010dca  bl #8106                         => 0x12d78 print2msg
+00010dce  add.w r3, r7, #8
+00010dd2  ldrb r3, [r3]
+00010dd4  cmp r3, #0
+00010dd6  beq #98                          => 0x10e3c
+00010dd8  add.w r3, r7, #8
+00010ddc  mov r0, r3
+00010dde  bl #-19418                       => 0xc208 cJSON_Parse
+00010de2  str.w r0, [r7, #140]
+00010de6  ldr.w r3, [r7, #140]
+00010dea  cmp r3, #0
+00010dec  beq #76                          => 0x10e3c
+00010dee  ldr.w r3, [r7, #140]
+00010df2  ldr r3, [r3, #8]
+00010df4  str.w r3, [r7, #148]
+00010df8  b #48                            => 0x10e2c
+00010dfa  ldr.w r0, [r7, #148]
+00010dfe  movs r1, #1
+00010e00  bl #-11908                       => 0xdf80 cJSON_Duplicate
+00010e04  str.w r0, [r7, #136]
+00010e08  ldr.w r3, [r7, #136]
+00010e0c  cmp r3, #0
+00010e0e  beq #16                          => 0x10e22
+00010e10  ldr.w r3, [r7, #148]
+00010e14  ldr r3, [r3, #32]
+00010e16  ldr r0, [r7, #4]
+00010e18  mov r1, r3
+00010e1a  ldr.w r2, [r7, #136]
+00010e1e  bl #-15234                       => 0xd2a0 cJSON_AddItemToObject
+00010e22  ldr.w r3, [r7, #148]
+00010e26  ldr r3, [r3]
+00010e28  str.w r3, [r7, #148]
+00010e2c  ldr.w r3, [r7, #148]
+00010e30  cmp r3, #0
+00010e32  bne #-60                         => 0x10dfa
+00010e34  ldr.w r0, [r7, #140]
+00010e38  bl #-24276                       => 0xaf68 cJSON_Delete
+00010e3c  add.w r7, r7, #152
+
+### getStorageData
+0000a8c6  ldr r3, [r7]
+0000a8c8  cmp r3, #2
+0000a8ca  beq #24                          => 0xa8e6
+0000a8cc  movw r2, #886
+0000a8d0  cmp r3, r2
+0000a8d2  beq #24                          => 0xa8ee
+0000a8d4  cmp r3, #1
+0000a8d6  bne #22                          => 0xa8f0
+0000a8d8  ldr r0, [r7, #20]
+0000a8da  bl #27338                        => 0x113a8 ecuToStorageData1
+0000a8de  ldr r0, [r7, #20]
+0000a8e0  bl #25736                        => 0x10d6c AddMeterData
+0000a8e4  b #8                             => 0xa8f0
+0000a8e6  ldr r0, [r7, #20]
+0000a8e8  bl #25728                        => 0x10d6c AddMeterData
+0000a8ec  b #0                             => 0xa8f0
+0000a8ee  nop

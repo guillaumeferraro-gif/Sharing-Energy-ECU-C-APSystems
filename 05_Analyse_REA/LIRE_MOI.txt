@@ -1,0 +1,25 @@
+ANALYSE REA - facultative pour l’exploitation du montage valide
+
+Ce dossier conserve le lanceur utilise pour l’extraction v3.3 et des extraits
+techniques de reference C1.2.27A. Aucun firmware ni releve prive n’est joint.
+
+Avant son utilisation sur votre propre extraction :
+1. Installer REA/Ghidra/Codex selon les pages 10 et 11 du guide.
+2. Controler le manifeste SHA256SUMS.txt, l’inventaire et la version extraite.
+3. Dans preparer_rea.py, renseigner ARCHIVE_SHA avec l’empreinte SHA-256 de
+   votre archive. Adapter aussi les controles de nombres de fichiers et de
+   manifeste (valeurs de reference : 951 et 936), la version et le message
+   de compte. Ne pas supprimer ces verifications pour faire passer une archive.
+4. Adapter mission_REA.txt au contenu confirme. Les adresses et extraits du
+   dossier reference concernent la version analysee ; les revalider si elle change.
+5. Sous Windows/Ubuntu WSL, lancer 1_Analyser_avec_REA.cmd et choisir l’archive.
+   Sous Linux/macOS avec les outils configures : python3 preparer_rea.py CHEMIN_ARCHIVE.
+
+Le dossier de travail et le retour_REA_v33_*.zip generes sont personnels.
+L’analyse est hors ligne vis-a-vis des appareils. Elle ne doit pas executer
+les binaires du firmware ni modifier l’installation.
+
+Le lanceur n’est volontairement pas configure pour une archive de particulier.
+Il refusera une archive tant que son empreinte de reference n’est pas renseignee.
+Son fonctionnement vient du parcours utilise ; une nouvelle archive demande
+les adaptations explicites ci-dessus, pas uniquement un nouveau nom de fichier.

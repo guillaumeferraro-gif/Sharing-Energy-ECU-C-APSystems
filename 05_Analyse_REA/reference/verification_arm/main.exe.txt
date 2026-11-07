@@ -1,0 +1,238 @@
+### meter_calculate_power
+000b0e08  push {r7}
+000b0e0a  sub sp, #28
+000b0e0c  add r7, sp, #0
+000b0e0e  movs r3, #0
+000b0e10  strb r3, [r7, #23]
+000b0e12  mov.w r3, #0
+000b0e16  str r3, [r7, #16]
+000b0e18  movw r3, #21984
+000b0e1c  movt r3, #48                     @ 0x3055e0 systemInfoR
+000b0e20  ldr r3, [r3, #60]
+000b0e22  cmp r3, #4
+000b0e24  bne #36                          => 0xb0e4c
+000b0e26  movw r3, #3212
+000b0e2a  movt r3, #39                     @ 0x270c8c g_meter
+000b0e2e  vldr s14, [r3, #160]
+000b0e32  movw r3, #21984
+000b0e36  movt r3, #48                     @ 0x3055e0 systemInfoR
+000b0e3a  vldr s15, [r3, #48]
+000b0e3e  vcvt.f32.s32 s15, s15
+000b0e42  vadd.f32 s15, s14, s15
+000b0e46  vstr s15, [r7, #16]
+000b0e4a  b #42                            => 0xb0e78
+000b0e4c  movw r3, #3212
+000b0e50  movt r3, #39                     @ 0x270c8c g_meter
+000b0e54  vldr s14, [r3, #160]
+000b0e58  movw r3, #21984
+000b0e5c  movt r3, #48                     @ 0x3055e0 systemInfoR
+000b0e60  ldr r2, [r3, #48]
+000b0e62  mov r3, r2
+000b0e64  lsls r3, r3, #1
+000b0e66  adds r3, r3, r2
+000b0e68  vmov s13, r3
+000b0e6c  vcvt.f32.s32 s15, s13
+000b0e70  vadd.f32 s15, s14, s15
+000b0e74  vstr s15, [r7, #16]
+000b0e78  movs r3, #0
+
+### do_ccR
+000b78f4  push {r7, lr}
+000b78f6  add r7, sp, #0
+000b78f8  movw r3, #6660
+000b78fc  movt r3, #15                     @ 0xf1a04 g_meter_switch
+000b7900  ldr r3, [r3]
+000b7902  cmp r3, #1
+000b7904  bne.w #336                       => 0xb7a58
+000b7908  movw r3, #3208
+000b790c  movt r3, #39                     @ 0x270c88 g_meter_mode
+000b7910  ldr r3, [r3]
+000b7912  cmp r3, #1
+000b7914  beq #12                          => 0xb7924
+000b7916  movw r3, #3208
+000b791a  movt r3, #39                     @ 0x270c88 g_meter_mode
+000b791e  ldr r3, [r3]
+000b7920  cmp r3, #3
+000b7922  bne #4                           => 0xb792a
+000b7924  bl #-376                         => 0xb77b0 do_ccR_func
+000b7928  b #300                           => 0xb7a58
+
+### do_ccR_func
+000b77b0  push {r7, lr}
+000b77b2  sub sp, #8
+000b77b4  add r7, sp, #0
+000b77b6  movw r0, #27828
+000b77ba  movt r0, #14                     @ 0xe6cb4 '/etc/yuneng/ZE_mode.conf'
+000b77be  bl #-706722                      => 0xaf20 get_ints_from_file
+000b77c2  str r0, [r7, #4]
+000b77c4  movs r0, #0
+000b77c6  bl #-21014                       => 0xb25b4 meter_get_data_entry
+000b77ca  bl #-25246                       => 0xb1530 meter_calculate_average
+000b77ce  bl #-27082                       => 0xb0e08 meter_calculate_power
+000b77d2  movw r3, #3212
+000b77d6  movt r3, #39                     @ 0x270c8c g_meter
+000b77da  ldrb r3, [r3, #2]
+000b77dc  cmp r3, #0
+000b77de  beq.w #260                       => 0xb78e6
+000b77e2  movw r3, #3212
+000b77e6  movt r3, #39                     @ 0x270c8c g_meter
+000b77ea  ldr r3, [r3, #12]
+000b77ec  cmp r3, #1
+000b77ee  bne #30                          => 0xb7810
+000b77f0  movw r3, #3212
+
+000b78c0  movw r3, #32544
+000b78c4  movt r3, #15                     @ 0xf7f20 slowMeter
+000b78c8  ldr r3, [r3]
+000b78ca  cmp r3, #1
+000b78cc  beq #4                           => 0xb78d4
+000b78ce  ldr r3, [r7, #4]
+000b78d0  cmp r3, #1
+000b78d2  bne #4                           => 0xb78da
+000b78d4  bl #-40172                       => 0xadbec countercurrentWithPowerR
+000b78d8  b #16                            => 0xb78ec
+000b78da  bl #-39582                       => 0xade40 countercurrentWithPowerR2
+000b78de  b #10                            => 0xb78ec
+000b78e0  bl #-40184                       => 0xadbec countercurrentWithPowerR
+000b78e4  b #4                             => 0xb78ec
+000b78e6  nop
+000b78e8  b #0                             => 0xb78ec
+000b78ea  nop
+000b78ec  add.w r7, r7, #8
+
+### do_cc_singleR
+000abc92  movw r3, #22104
+000abc96  movt r3, #48                     @ 0x305658 g_doccInfo
+000abc9a  ldr r3, [r3, #4]
+000abc9c  mov r0, r3
+000abc9e  vldr d0, [r7]
+000abca2  ldr r1, [pc, #60]                literal 0xabce0 = 0x305678
+000abca4  bl #-1488                        => 0xab6d8 do_cc_setPower_entry
+000abca8  b #38                            => 0xabcd2
+
+### do_cc_setPower_entry
+000ab8c2  movt r3, #16473
+000ab8c6  b #2                             => 0xab8cc
+000ab8c8  ldrd r2, r3, [r7, #40]
+000ab8cc  strd r2, r3, [r7, #40]
+000ab8d0  vldr d0, [r7, #40]
+000ab8d4  movs r0, #1
+000ab8d6  bl #99130                        => 0xc3c14 send_slave_Persent_broadcast
+000ab8da  vldr d0, [r7, #56]
+000ab8de  bl #-1474                        => 0xab320 do_cc_setPower_broadcast
+000ab8e2  str r0, [r7, #68]
+000ab8e4  b #330                           => 0xaba32
+000ab8e6  ldr r3, [r7, #12]
+
+### displayonweb
+00030de0  push {r7, lr}
+00030de2  sub sp, #72
+00030de4  add r7, sp, #32
+00030de6  str r0, [r7, #4]
+00030de8  str r1, [r7]
+00030dea  add.w r3, r7, #8
+00030dee  movs r2, #0
+00030df0  str r2, [r3]
+00030df2  adds r3, #4
+00030df4  movs r2, #0
+00030df6  str r2, [r3]
+00030df8  adds r3, #4
+00030dfa  movs r2, #0
+00030dfc  str r2, [r3]
+00030dfe  adds r3, #4
+00030e00  movs r2, #0
+00030e02  str r2, [r3]
+00030e04  adds r3, #4
+00030e06  movs r2, #0
+00030e08  str r2, [r3]
+00030e0a  adds r3, #4
+00030e0c  ldr r3, [r7, #4]
+00030e0e  str r3, [r7, #36]
+00030e10  add.w r3, r7, #8
+00030e14  mov r0, r3
+00030e16  movs r1, #0
+00030e18  movs r2, #20
+00030e1a  blx #-160460                     => 0x9b50 memset
+00030e1e  ldr r3, [r7]
+00030e20  ldrb r3, [r3]
+00030e22  strb r3, [r7, #8]
+00030e24  ldr r3, [r7]
+00030e26  ldrb r3, [r3, #1]
+00030e28  strb r3, [r7, #9]
+00030e2a  ldr r3, [r7]
+00030e2c  ldrb r3, [r3, #2]
+00030e2e  strb r3, [r7, #10]
+00030e30  ldr r3, [r7]
+00030e32  ldrb r3, [r3, #3]
+00030e34  strb r3, [r7, #11]
+00030e36  movs r3, #45
+00030e38  strb r3, [r7, #12]
+00030e3a  ldr r3, [r7]
+00030e3c  ldrb r3, [r3, #4]
+00030e3e  strb r3, [r7, #13]
+00030e40  ldr r3, [r7]
+00030e42  ldrb r3, [r3, #5]
+00030e44  strb r3, [r7, #14]
+00030e46  movs r3, #45
+00030e48  strb r3, [r7, #15]
+00030e4a  ldr r3, [r7]
+00030e4c  ldrb r3, [r3, #6]
+00030e4e  strb r3, [r7, #16]
+00030e50  ldr r3, [r7]
+00030e52  ldrb r3, [r3, #7]
+00030e54  strb r3, [r7, #17]
+00030e56  movs r3, #32
+00030e58  strb r3, [r7, #18]
+00030e5a  ldr r3, [r7]
+00030e5c  ldrb r3, [r3, #8]
+00030e5e  strb r3, [r7, #19]
+00030e60  ldr r3, [r7]
+00030e62  ldrb r3, [r3, #9]
+00030e64  strb r3, [r7, #20]
+00030e66  movs r3, #58
+00030e68  strb r3, [r7, #21]
+00030e6a  ldr r3, [r7]
+00030e6c  ldrb r3, [r3, #10]
+00030e6e  strb r3, [r7, #22]
+00030e70  ldr r3, [r7]
+00030e72  ldrb r3, [r3, #11]
+00030e74  strb r3, [r7, #23]
+00030e76  movs r3, #58
+00030e78  strb r3, [r7, #24]
+00030e7a  ldr r3, [r7]
+00030e7c  ldrb r3, [r3, #12]
+00030e7e  strb r3, [r7, #25]
+00030e80  ldr r3, [r7]
+00030e82  ldrb r3, [r3, #13]
+00030e84  strb r3, [r7, #26]
+00030e86  movw r0, #33304
+00030e8a  movt r0, #13                     @ 0xd8218 '/tmp/parameters.conf'
+00030e8e  movw r1, #33172
+00030e92  movt r1, #13                     @ 0xd8194 'w'
+00030e96  blx #-160524                     => 0x9b8c fopen
+00030e9a  str r0, [r7, #28]
+00030e9c  ldr r3, [r7, #28]
+00030e9e  cmp r3, #0
+
+00030eec  ldr r0, [r1, #68]
+00030eee  ldr r1, [r7, #36]
+00030ef0  ldr r1, [r1, #76]
+00030ef2  vstr s13, [sp]
+00030ef6  vstr d7, [sp, #8]
+00030efa  str r0, [sp, #16]
+00030efc  str r1, [sp, #20]
+00030efe  add.w r1, r7, #8
+00030f02  str r1, [sp, #24]
+00030f04  ldr r0, [r7, #28]
+00030f06  movw r1, #33328
+00030f0a  movt r1, #13                     @ 0xd8230 '%s, %d, %d, %.1f, %d, %d, %s\n'
+00030f0e  blx #-159960                     => 0x9e38 fprintf
+00030f12  b.w #3374                        => 0x31c44
+
+### main
+0000c1f6  sub.w r3, r3, #3632
+0000c1fa  mov r0, r3
+0000c1fc  ldr r1, [pc, #612]               literal 0xc464 = 0xf7fcc
+0000c1fe  bl #150494                       => 0x30de0 displayonweb
+0000c202  movw r3, #32644
+0000c206  movt r3, #15                     @ 0xf7f84 ecu

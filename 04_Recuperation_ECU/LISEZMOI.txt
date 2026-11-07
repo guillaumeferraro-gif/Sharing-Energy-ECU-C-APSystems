@@ -1,0 +1,31 @@
+RECUPERATION ECU v3.3 - outil avance facultatif
+
+Utiliser les fichiers de la copie personnalisee : adresse ECU et reference
+temporaire sont adaptees ensemble avec l’empreinte du paquet.
+Ce dossier contient le collecteur, pas le firmware extrait d’une installation.
+
+Sur Windows, depuis le reseau local de son ECU et hors autre maintenance :
+1. Lancer Recuperer_ECU.cmd une seule fois.
+2. Attendre la preparation, le transfert et leurs controles.
+3. Conserver l’archive ecu_etendu_v3_3.tar.gz et ses rapports en prive.
+4. Si le transfert est interrompu, utiliser Reprendre_telechargement.cmd
+   pendant la disponibilite de la copie temporaire, environ quinze minutes.
+
+Le collecteur recupere le code applicatif, les bibliotheques, le code web et
+des elements de demarrage. Il ne constitue pas une image complete de la flash.
+Il utilise le service de maintenance local de la version etudiee et verifie
+la disponibilite de assist avant l’envoi. Un emplacement occupe arrete l’envoi.
+Ne pas forcer ce controle ni effectuer une mise a jour en meme temps.
+
+Le lanceur verifie le paquet, le transfert, la compression et la structure.
+Les sources de assist et de VerifierGzip.cs sont fournies pour inspection.
+Les fichiers de travail temporaires sont geres par le collecteur. Les limites
+de taille, le manifeste et les exclusions font partie de son fonctionnement.
+
+Les extractions peuvent contenir des informations propres au boitier, y compris
+dans du code ou des chaines integrees. Elles ne font pas partie du paquet public
+et ne doivent pas etre ajoutees telles quelles au futur depot.
+
+Le lanceur est prevu pour PowerShell Windows ; un portage macOS/Linux reste
+distinct de l’analyse des archives, qui peut fonctionner sur ces postes.
+Voir page 9 du guide.

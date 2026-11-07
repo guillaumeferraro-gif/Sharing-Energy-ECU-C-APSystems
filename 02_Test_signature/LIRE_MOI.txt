@@ -1,0 +1,25 @@
+TEST 1 - Verifier que l’ECU utilise la mesure de l’ESP32
+
+Depart : copie personnalisee, ESP32 selectionne, mesure Shelly valide,
+zero export DESACTIVE. Ce test peut etre fait sans soleil.
+
+Windows : Relever_les_watts.cmd.
+Linux/macOS : python3 -B -u relever.py depuis ce dossier.
+Laisser la fenetre ouverte environ quatre a cinq minutes.
+
+Apres deux ecritures nouvelles et concordantes, le lecteur demande une seule
+impulsion de +1000 W, limitee a 90 secondes par l’ESP32. Le Shelly continue
+de mesurer la realite. L’ECU doit suivre les watts transmis par l’ESP32 avant,
+pendant et apres, avec troncature des decimales vers zero.
+
+Resultat : releve_rapide_ECU.json, a garder prive. Examiner aussi les ages et
+les erreurs si le verdict est indetermine. Le test de reaction de production
+se trouve dans 03_Test_bridage et utilise un autre etat de depart.
+
+Ne pas lancer une autre collecte/maintenance ECU pendant le releve.
+Si assist est deja occupe, conserver le refus et terminer l’operation precedente.
+Apres une interruption, relancer dans le meme dossier tente de reprendre la
+session sans nouvelle impulsion, pendant la disponibilite temporaire des traces.
+L’ESP32 arrete lui-meme le decalage apres 90 secondes ; sa page permet un arret.
+
+Voir page 7 du guide et README.md pour la preparation et les limites de preuve.

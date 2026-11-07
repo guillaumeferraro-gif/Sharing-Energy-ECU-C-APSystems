@@ -1,0 +1,18 @@
+ESP32 v0.8.8 - source du montage valide avec un Shelly
+
+Utiliser de preference la copie produite par Personnaliser.py, a la racine.
+Elle renseigne le Wi-Fi, les identites, les adresses texte et IPAddress(...),
+le canal et les cles JSON correspondantes. Ne pas compiler les modeles vides.
+
+Ouvrir ESP32_v088/ESP32_v088.ino avec ses quatre fichiers .h voisins.
+Carte de reference : ESP32 Dev Module ; moniteur serie : 115200 bauds.
+Voir pages 3 a 5 du guide pour la preparation, le reperage et la selection.
+Verifier CT_GRID_BACKUP et switchCtRoleMatches sur le boitier cible.
+
+Preparer_ESP32.cmd est aussi conserve : il reprend uniquement le Wi-Fi dans
+un ancien sketch v0.8.7 deja configure. Il ne remplace pas la personnalisation
+des identites, des adresses et des reglages de tores pour une autre installation.
+
+L’integration du deuxieme Shelly pour l’ACC reste a realiser. La presente
+version lit une seule source Shelly ; le test +1000 W est une impulsion
+temporaire, pas un second compteur et pas une consigne permanente.

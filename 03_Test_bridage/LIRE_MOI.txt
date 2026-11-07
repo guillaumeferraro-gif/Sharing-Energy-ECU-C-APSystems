@@ -1,0 +1,29 @@
+TEST 2 - Verifier la reaction de production
+
+Depart : test de signature valide, ESP32 selectionne, Shelly valide,
+zero export ACTIVE a 0 W. Soleil stable et au moins 1000 W de production
+supplementaire disponible au-dela de la consommation de la maison.
+
+Windows : Relever_les_watts.cmd.
+Linux/macOS : python3 -B -u relever.py depuis ce dossier.
+Garder relever.py, bridage.py, onduleurs.py et lecture.sh ensemble.
+
+Le lecteur effectue un seul test temporaire +1000 W pendant au plus 90 s.
+Resultat attendu stabilise : ECU proche de 0 W, reseau reel Shelly proche de
+-1000 W et production augmentee d’environ 1000 W. Apres retrait du decalage,
+les mesures doivent revenir vers leur fonctionnement initial. Ce sont des
+ordres de grandeur sous conditions stables, pas une precision garantie au watt.
+
+Ne pas changer les gros consommateurs ni les reglages pendant la capture.
+Laisser la fenetre ouverte environ cinq minutes. Conserver en prive
+releve_bridage_ECU.json et comparer a l’observation independante Shelly.
+
+Un manque de soleil, une valeur ancienne ou une confirmation perdue peut
+rendre le verdict automatique indetermine. Lire les preuves brutes ensemble.
+Les releves des canaux des micro-onduleurs peuvent rester espaces ; ce test
+valide la production totale et non le delai individuel de chaque appareil.
+
+Ne pas superposer ce test a une autre collecte ou maintenance ECU.
+Le decalage expire sur l’ESP32 meme si le PC se deconnecte. La page ESP32
+propose aussi son arret. Pour la reprise d’une session, garder le meme dossier.
+Voir page 8 du guide.

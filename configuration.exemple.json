@@ -1,0 +1,12 @@
+{
+  "wifi_ssid": "",
+  "wifi_mot_de_passe": "",
+  "ip_ecu": "",
+  "uid_ecu": "",
+  "version_ecu": "ECU-C-Z_C1.2.27A",
+  "ip_shelly": "",
+  "mac_shelly": "",
+  "canal_shelly": 1,
+  "ip_esp32": "",
+  "id_compteur_esp32": ""
+}

@@ -1,0 +1,47 @@
+PORTEE DES VERIFICATIONS
+
+Origine des outils
+- ESP32 v0.8.8 : version employee lors des essais ayant montre la reception
+  de la mesure par l’ECU et l’effet du bridage sur la production totale.
+- Les deux lecteurs de test et le collecteur v3.3 sont les versions retenues
+  dans ce parcours. Leurs conditions de depart different et restent conservees.
+- REA : le lanceur conserve les controles d’archive. Sa reference privee a
+  ete retiree ; une nouvelle extraction demande les adaptations documentees.
+
+Preparation de cette edition publique
+- Retrait des adresses, UID/MAC, parametres Wi-Fi et references de session
+  propres a l’installation. Aucun releve personnel ni firmware extrait joint.
+- Ajout de Personnaliser.py : generation de copies locales, sans acces reseau.
+- Parametres d’identite, cibles IP et canaux synchronises ; mise a jour des
+  UID des collecteurs et des empreintes correspondantes, sans suppression
+  des controles. Paquet de recuperation reconstruit avec sa source exacte.
+
+Controles effectues sur les copies personnalisees avec des identites fictives
+- Configuration complete, canal 0, reperage initial sans identite ESP32.
+- Refus d’une configuration absente et d’un dossier de sortie deja present.
+- Concordance des adresses texte et IPAddress(...), des canaux, UID et MAC.
+- Empreinte de chaque lecture.sh et du paquet de recuperation ; concordance
+  octet pour octet de son membre update_localweb/assist avec sources/assist.sh.
+- Syntaxe de tous les fichiers Python et shell.
+- Compilation native des portions pertinentes du sketch avec les bancs
+  existants : 59 scenarios WebSocket/HTTP/Shelly, 14 scenarios compteur,
+  21 controles d’identite et de selection/restauration.
+- Verification de la trame AES/CRC, des puissances A/total, des 90 secondes,
+  de l’arret, du refus de rejeu et des mesures invalides.
+- Neuf scenarios du lecteur de signature : fonctionnement, confirmation
+  perdue, valeur ignoree, mauvaise configuration, cache fige, silence,
+  ancienne version et collecteur occupe.
+- Dix-huit scenarios du lecteur de bridage : reaction, absence de reaction,
+  reserve limitee, faible production, mauvaise consigne, source absente,
+  changement de reglage, interruption, reprise et arret.
+- Execution des deux collecteurs de lecture dans un arbre de test local,
+  controle des traces incompletes/corrompues et de leur nettoyage.
+- Audit des fichiers publics, du PDF, du paquet imbrique et du ZIP final.
+
+Limites
+Ces derniers controles sont hors materiel. Il n’y a eu ni connexion aux
+appareils, ni compilation cible complete Arduino, ni nouveau televersement
+ESP32, ni execution du lanceur de recuperation sur Windows pendant la
+preparation de l’archive. Les controles natifs ne remplacent pas les essais
+de l’installation cible. Les verifications historiques sur materiel portent
+sur un Shelly ; le second Shelly et les interfaces domotiques restent a integrer.

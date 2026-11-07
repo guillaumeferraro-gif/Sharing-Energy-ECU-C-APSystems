@@ -1,0 +1,17 @@
+REPERES TECHNIQUES - C1.2.27A
+
+Les extraits fournis proviennent de l’analyse statique utilisee dans le projet.
+Ils aident a retrouver les fonctions, sans remplacer l’analyse de votre version.
+REA a produit des decompilations ; les extraits ARM ont aussi servi au recoupement.
+
+Points ayant permis l’aboutissement :
+- nom d’hote M01 suivi de l’identifiant exact du compteur, avec la casse correcte ;
+- reponse APS coherente avec le modele de mesure et l’identite selectionnee ;
+- suivi de la valeur signee jusqu’aux caches de puissance de l’ECU ;
+- comparaison Shelly / ESP32 / ECU pendant une impulsion connue de +1000 W ;
+- verification de la variation reelle de production avec zero export actif.
+
+Un debordement IPC a ete repere dans le code, mais son role dans le blocage
+observe n’a pas ete confirme. La fragmentation TCP n’a pas ete demontree.
+Les constats de reception et de reaction physique proviennent des essais,
+et non de la seule presence des fonctions dans les executables.
